@@ -90,21 +90,3 @@ DELETE DATA FROM
 ```
 
 Enter the number corresponding to the action you want to perform, and follow the prompts.
-
-## Known Issues
-
-A few mismatches exist between the table schema and the queries, which will cause runtime errors if triggered:
-
-- `add2()` inserts into columns `(Code, BookName, BookAvailability)`, but the `Books` table defines the column as `BookCode`, not `Code`.
-- `dels2()` selects/deletes using `where code=...`, but again the actual column name is `BookCode`.
-- Menu options 3 and 4 are swapped relative to their labels: choosing "3-Books Issued Details" calls `show3()` (unavailable books), and "4-Available Books" calls `show4()` (available books) — functionally fine, but there's no dedicated view for the `IssuedBooks` table itself.
-- There's no input validation, so entering non-numeric text where an integer is expected (e.g., Admission Number, Book ID) will crash the program.
-- No duplicate-key handling: attempting to add a student/book with an existing primary key will throw an unhandled MySQL error.
-
-## Possible Improvements
-
-- Fix the column name mismatches noted above.
-- Add a dedicated function to view the `IssuedBooks` table.
-- Wrap database calls in `try/except` blocks for graceful error handling.
-- Add a "return book" feature that removes an entry from `IssuedBooks` and flips the book's availability back to "Yes".
-- Loop the menu instead of exiting after a single action.
